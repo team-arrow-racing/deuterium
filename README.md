@@ -1,6 +1,6 @@
-# deuterium-bms
+# Deuterium Battery Management System.
 
-Deuterium Battery Management System.
+Next generation integrated battery management.
 
 ## Hardware
 
