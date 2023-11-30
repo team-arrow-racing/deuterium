@@ -57,7 +57,7 @@ fn panic() -> ! {
     cortex_m::asm::udf()
 }
 
-defmt::timestamp!("time={=u32}ms", {
+defmt::timestamp!("{=u32}ms", {
     // 1 tick = 1 millisecond
-    Systick::now().ticks()
+    Systick::now().duration_since_epoch().to_millis()
 });
