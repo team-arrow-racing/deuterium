@@ -34,7 +34,7 @@ mod app {
 
     #[shared]
     struct Shared {
-        can: bxcan::Can<io::Can1>,
+        can1: bxcan::Can<io::Can1>,
         rtc: Rtc,
     }
 
@@ -67,7 +67,7 @@ mod app {
         let mono_token = rtic_monotonics::create_systick_token!();
         Systick::start(cx.core.SYST, clocks.sysclk().to_Hz(), mono_token);
 
-        let can = {
+        let can1 = {
             let rx =
                 gpioa
                     .pa11
@@ -118,7 +118,7 @@ mod app {
         };
 
         (
-            Shared { can, rtc },
+            Shared { can1, rtc },
             Local {
                 watchdog,
                 led_status,
