@@ -1,4 +1,6 @@
 //! I/O Type Definitions
+//!
+//! These are put here since they don't change very much.
 
 use crate::hal::{
     can::Can,
