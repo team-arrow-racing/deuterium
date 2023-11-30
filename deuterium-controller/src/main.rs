@@ -21,7 +21,11 @@ use stm32l4xx_hal as hal;
 
 use bxcan::{filter::Mask32, Interrupts};
 use hal::prelude::*;
-use hal::{can::Can, watchdog::IndependentWatchdog};
+use hal::{
+    can::Can,
+    rtc::{Rtc, RtcClockSource, RtcConfig},
+    watchdog::IndependentWatchdog,
+};
 use rtic_monotonics::{systick::Systick, Monotonic};
 
 #[rtic::app(device = hal::pac, dispatchers = [SAI1, SWPMI1, QUADSPI])]
@@ -31,6 +35,7 @@ mod app {
     #[shared]
     struct Shared {
         can: bxcan::Can<io::Can1>,
+        rtc: Rtc,
     }
 
     #[local]
@@ -89,6 +94,14 @@ mod app {
             can
         };
 
+        let rtc = Rtc::rtc(
+            cx.device.RTC,
+            &mut rcc.apb1r1,
+            &mut rcc.bdcr,
+            &mut pwr.cr1,
+            RtcConfig::default().clock_config(RtcClockSource::LSE),
+        );
+
         let led_status = gpiob
             .pb13
             .into_open_drain_output(&mut gpiob.moder, &mut gpiob.otyper);
@@ -105,7 +118,7 @@ mod app {
         };
 
         (
-            Shared { can },
+            Shared { can, rtc },
             Local {
                 watchdog,
                 led_status,
