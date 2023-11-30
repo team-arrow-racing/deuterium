@@ -42,7 +42,7 @@ mod app {
 
     #[init]
     fn init(cx: init::Context) -> (Shared, Local) {
-        defmt::info!("Init");
+        defmt::trace!("task: init");
 
         // peripheral access
         let mut flash = cx.device.FLASH.constrain();
