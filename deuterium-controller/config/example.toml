@@ -1,0 +1,24 @@
+[comms.canbus]
+bitrate = 500_000
+id = 0x600
+
+[comms.modbus]
+baudrate = 115_200
+id = 32
+
+[battery]
+voltage_min = 95
+voltage_max = 165
+temperature_min = 0.0
+temperature_max = 50.0
+current_max = 110.0
+
+[cell]
+voltage_min = 2.5
+voltage_max = 4.2
+temperature_min = 0.0
+temperature_max = 45.0
+
+[precharge]
+timeout = 1.5
+temperature_max = 150
