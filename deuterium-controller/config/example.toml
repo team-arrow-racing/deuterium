@@ -21,4 +21,4 @@ temperature_max = 45.0
 
 [precharge]
 timeout = 1.5
-temperature_max = 150
+temperature_max = 90.0
