@@ -13,6 +13,7 @@
 #![no_std]
 #![feature(type_alias_impl_trait)]
 
+mod config;
 mod io;
 mod state;
 
