@@ -14,6 +14,7 @@
 #![feature(type_alias_impl_trait)]
 
 mod io;
+mod state;
 
 use defmt_rtt as _;
 use panic_probe as _;
@@ -27,6 +28,7 @@ use hal::{
     watchdog::IndependentWatchdog,
 };
 use rtic_monotonics::{systick::Systick, Monotonic};
+use state::State;
 
 #[rtic::app(device = hal::pac, dispatchers = [SAI1, SWPMI1, QUADSPI])]
 mod app {
@@ -36,6 +38,7 @@ mod app {
     struct Shared {
         can1: bxcan::Can<io::Can1>,
         rtc: Rtc,
+        state: State,
     }
 
     #[local]
@@ -117,8 +120,10 @@ mod app {
             wd
         };
 
+        let state = State::default();
+
         (
-            Shared { can1, rtc },
+            Shared { can1, rtc, state },
             Local {
                 watchdog,
                 led_status,
