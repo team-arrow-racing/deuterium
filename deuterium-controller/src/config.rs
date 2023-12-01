@@ -71,5 +71,6 @@ pub struct Cell {
 /// Precharge
 #[derive(Deserialize)]
 pub struct Precharge {
-    pub timeout: u32,
+    pub timeout: f32,
+    pub temperature_max: f32,
 }
