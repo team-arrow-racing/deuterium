@@ -1,13 +1,19 @@
+/// Battery state
+#[derive(Default)]
 pub enum State {
+    #[default]
     Idle,
     Enable,
-    Precharge,
+    Precharge(PrechargeState),
     Running,
     Configuration,
 }
 
-impl Default for State {
-    fn default() -> Self {
-        Self::Idle
-    }
+/// Precharge state
+#[derive(Default)]
+pub enum PrechargeState {
+    #[default]
+    Isolated,
+    Negative,
+    Charging,
 }
