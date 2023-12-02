@@ -22,6 +22,7 @@ use panic_probe as _;
 use stm32l4xx_hal as hal;
 
 use bxcan::{filter::Mask32, Interrupts};
+use config::Config;
 use hal::prelude::*;
 use hal::{
     can::Can,
@@ -39,6 +40,7 @@ mod app {
     struct Shared {
         can1: bxcan::Can<io::Can1>,
         rtc: Rtc,
+        config: Config,
         state: State,
     }
 
@@ -126,8 +128,15 @@ mod app {
 
         let state = State::default();
 
+        let config: Config = Default::default();
+
         (
-            Shared { can1, rtc, state },
+            Shared {
+                can1,
+                rtc,
+                config,
+                state,
+            },
             Local {
                 watchdog,
                 led_status,

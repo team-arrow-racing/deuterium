@@ -1,7 +1,7 @@
 use serde::Deserialize;
 
 /// Configuration File
-#[derive(Deserialize)]
+#[derive(Deserialize, Default)]
 pub struct Config {
     /// Communications
     pub comms: Comms,
@@ -14,7 +14,7 @@ pub struct Config {
 }
 
 /// Communications
-#[derive(Deserialize)]
+#[derive(Deserialize, Default)]
 pub struct Comms {
     /// CAN bus communications
     pub canbus: CommsCanbus,
@@ -31,6 +31,15 @@ pub struct CommsCanbus {
     pub id: u16,
 }
 
+impl Default for CommsCanbus {
+    fn default() -> Self {
+        Self {
+            bitrate: 500_000,
+            id: 0x600,
+        }
+    }
+}
+
 /// Modbus communications
 #[derive(Deserialize)]
 pub struct CommsModbus {
@@ -38,6 +47,15 @@ pub struct CommsModbus {
     pub baudrate: u32,
     /// Slave ID
     pub id: u8,
+}
+
+impl Default for CommsModbus {
+    fn default() -> Self {
+        Self {
+            baudrate: 115_200,
+            id: 10,
+        }
+    }
 }
 
 /// Battery
@@ -55,6 +73,18 @@ pub struct Battery {
     pub current_max: f32,
 }
 
+impl Default for Battery {
+    fn default() -> Self {
+        Self {
+            voltage_min: 95.0,
+            voltage_max: 165.0,
+            temperature_min: 0.0,
+            temperature_max: 50.0,
+            current_max: 100.0,
+        }
+    }
+}
+
 /// Cell
 #[derive(Deserialize)]
 pub struct Cell {
@@ -68,9 +98,31 @@ pub struct Cell {
     pub temperature_max: f32,
 }
 
+impl Default for Cell {
+    fn default() -> Self {
+        Self {
+            voltage_min: 2.5,
+            voltage_max: 4.2,
+            temperature_min: 0.0,
+            temperature_max: 45.0,
+        }
+    }
+}
+
 /// Precharge
 #[derive(Deserialize)]
 pub struct Precharge {
+    /// Precharge timeout
     pub timeout: f32,
+    /// Precharge resistor maximum temperature limit
     pub temperature_max: f32,
+}
+
+impl Default for Precharge {
+    fn default() -> Self {
+        Self {
+            timeout: 5.0,
+            temperature_max: 95.0,
+        }
+    }
 }
