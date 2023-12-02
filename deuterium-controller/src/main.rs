@@ -68,8 +68,11 @@ mod app {
             .pclk2(80.MHz())
             .freeze(&mut flash.acr, &mut pwr);
 
-        let mono_token = rtic_monotonics::create_systick_token!();
-        Systick::start(cx.core.SYST, clocks.sysclk().to_Hz(), mono_token);
+        Systick::start(
+            cx.core.SYST,
+            clocks.sysclk().to_Hz(),
+            rtic_monotonics::create_systick_token!(),
+        );
 
         let can1 = {
             let rx =
