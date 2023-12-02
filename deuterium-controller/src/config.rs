@@ -25,7 +25,7 @@ pub struct Comms {
 /// CAN bus communications
 #[derive(Deserialize)]
 pub struct CommsCanbus {
-    /// Bitrate
+    /// Bitrate (bit/s)
     pub bitrate: u32,
     /// Base identifier address
     pub id: u16,
@@ -43,7 +43,7 @@ impl Default for CommsCanbus {
 /// Modbus communications
 #[derive(Deserialize)]
 pub struct CommsModbus {
-    /// Serial baud rate
+    /// Serial baud rate (baud)
     pub baudrate: u32,
     /// Slave ID
     pub id: u8,
@@ -61,15 +61,15 @@ impl Default for CommsModbus {
 /// Battery
 #[derive(Deserialize)]
 pub struct Battery {
-    /// Minimum voltage limit
+    /// Minimum voltage limit (V)
     pub voltage_min: f32,
-    /// Maximum voltage limit
+    /// Maximum voltage limit (V)
     pub voltage_max: f32,
-    /// Minimum temperature limit
+    /// Minimum temperature limit (°C)
     pub temperature_min: f32,
-    /// Maximum temperature limit
+    /// Maximum temperature limit (°C)
     pub temperature_max: f32,
-    /// Maximum current limit
+    /// Maximum current limit (A)
     pub current_max: f32,
 }
 
@@ -88,13 +88,13 @@ impl Default for Battery {
 /// Cell
 #[derive(Deserialize)]
 pub struct Cell {
-    /// Minimum voltage limit
+    /// Minimum voltage limit (V)
     pub voltage_min: f32,
-    /// Maximum voltage limit
+    /// Maximum voltage limit (V)
     pub voltage_max: f32,
-    /// Minimum temperature limit
+    /// Minimum temperature limit (°C)
     pub temperature_min: f32,
-    /// Maximum temperature limit
+    /// Maximum temperature limit (°C)
     pub temperature_max: f32,
 }
 
@@ -112,9 +112,9 @@ impl Default for Cell {
 /// Precharge
 #[derive(Deserialize)]
 pub struct Precharge {
-    /// Precharge timeout
+    /// Precharge timeout (seconds)
     pub timeout: f32,
-    /// Precharge resistor maximum temperature limit
+    /// Precharge resistor maximum temperature limit (°C)
     pub temperature_max: f32,
 }
 
