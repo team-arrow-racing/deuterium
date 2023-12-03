@@ -25,7 +25,9 @@ use bxcan::{filter::Mask32, Interrupts};
 use config::Config;
 use hal::prelude::*;
 use hal::{
+    adc::ADC,
     can::Can,
+    delay::Delay,
     rtc::{Rtc, RtcClockSource, RtcConfig},
     watchdog::IndependentWatchdog,
 };
@@ -38,6 +40,7 @@ mod app {
 
     #[shared]
     struct Shared {
+        adc1: ADC,
         can1: bxcan::Can<io::Can1>,
         rtc: Rtc,
         config: Config,
@@ -75,6 +78,17 @@ mod app {
             clocks.sysclk().to_Hz(),
             rtic_monotonics::create_systick_token!(),
         );
+
+        let adc1 = {
+            let mut delay = Delay::new(unsafe { hal::pac::CorePeripherals::steal().SYST }, clocks);
+            ADC::new(
+                cx.device.ADC1,
+                cx.device.ADC_COMMON,
+                &mut rcc.ahb2,
+                &mut rcc.ccipr,
+                &mut delay,
+            )
+        };
 
         let can1 = {
             let rx =
@@ -132,6 +146,7 @@ mod app {
 
         (
             Shared {
+                adc1,
                 can1,
                 rtc,
                 config,
