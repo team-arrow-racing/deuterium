@@ -21,7 +21,7 @@ use defmt_rtt as _;
 use panic_probe as _;
 use stm32l4xx_hal as hal;
 
-use bxcan::{filter::Mask32, Interrupts};
+use bxcan::{filter::Mask32, Frame, Interrupts};
 use config::Config;
 use hal::prelude::*;
 use hal::{
@@ -41,7 +41,8 @@ mod app {
     #[shared]
     struct Shared {
         adc1: ADC,
-        can1: bxcan::Can<io::Can1>,
+        can1_rx: bxcan::Rx<io::Can1>,
+        can1_tx: bxcan::Tx<io::Can1>,
         rtc: Rtc,
         config: Config,
         state: State,
@@ -90,7 +91,7 @@ mod app {
             )
         };
 
-        let can1 = {
+        let (can1_tx, can1_rx) = {
             let rx =
                 gpioa
                     .pa11
@@ -114,7 +115,7 @@ mod app {
 
             can.enable_non_blocking().unwrap();
 
-            can
+            can.split()
         };
 
         let rtc = Rtc::rtc(
@@ -147,7 +148,8 @@ mod app {
         (
             Shared {
                 adc1,
-                can1,
+                can1_rx,
+                can1_tx,
                 rtc,
                 config,
                 state,
@@ -169,6 +171,33 @@ mod app {
 
             cx.local.watchdog.feed();
         }
+    }
+
+    #[task(priority = 2, shared = [can1_rx], binds = CAN1_RX0)]
+    fn can1_rx0_pending(mut cx: can1_rx0_pending::Context) {
+        cx.shared.can1_rx.lock(|can| match can.receive() {
+            Ok(f) => match can1_receive::spawn(f) {
+                Ok(_) => {}
+                Err(_) => defmt::error!("can1: failed to queue frame"),
+            },
+            Err(_) => defmt::error!("can1: failed to read frame"),
+        });
+    }
+
+    #[task(priority = 2, shared = [can1_rx], binds = CAN1_RX1)]
+    fn can1_rx1_pending(mut cx: can1_rx1_pending::Context) {
+        cx.shared.can1_rx.lock(|can| match can.receive() {
+            Ok(f) => match can1_receive::spawn(f) {
+                Ok(_) => {}
+                Err(_) => defmt::error!("can1: failed to queue frame"),
+            },
+            Err(_) => defmt::error!("can1: failed to read frame"),
+        });
+    }
+
+    #[task(priority = 1)]
+    async fn can1_receive(mut cx: can1_receive::Context, frame: Frame) {
+        // process messages here
     }
 
     #[idle]
