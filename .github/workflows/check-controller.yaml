@@ -20,6 +20,7 @@ jobs:
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: nightly
           targets: thumbv7em-none-eabihf
       - name: Check
         run: cargo check
