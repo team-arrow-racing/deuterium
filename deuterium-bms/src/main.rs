@@ -27,7 +27,7 @@ mod app {
         defmt::info!("Init");
 
         let mono_token = rtic_monotonics::create_systick_token!();
-        let mono = Systick::start(cx.core.SYST, SYSCLK, mono_token);
+        Systick::start(cx.core.SYST, SYSCLK, mono_token);
 
         (Shared {}, Local {})
     }
