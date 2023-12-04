@@ -1,0 +1,24 @@
+name: Check Controller
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-controller.yaml"
+      - "deuterium-controller/**"
+  pull_request:
+    paths:
+      - ".github/workflows/check-controller.yaml"
+      - "deuterium-controller/**"
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Check
+        run: cargo check
+        working-directory: deuterium-controller
