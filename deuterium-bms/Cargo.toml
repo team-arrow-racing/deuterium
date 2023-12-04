@@ -10,10 +10,11 @@ defmt = "0.3.5"
 defmt-rtt = "0.4.0"
 panic-probe = "0.3.1"
 rtic = { version = "2.0.1", features = ["thumbv7-backend"] }
-rtic-monotonics = "1.3.0"
+rtic-monotonics = { version = "1.3.0", features = ["cortex-m-systick"] }
 
 [dependencies.pac25-hal]
 git = "https://github.com/pac-rs/pac25-hal.git"
+features = ["pac25140"]
 
 [[bin]]
 name = "deuterium-bms"
