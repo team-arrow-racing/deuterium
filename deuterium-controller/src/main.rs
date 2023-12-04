@@ -210,11 +210,6 @@ mod app {
     }
 }
 
-#[defmt::panic_handler]
-fn panic() -> ! {
-    cortex_m::asm::udf()
-}
-
 defmt::timestamp!("{=u32}ms", {
     // 1 tick = 1 millisecond
     Systick::now().duration_since_epoch().to_millis()
