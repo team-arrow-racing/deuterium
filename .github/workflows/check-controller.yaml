@@ -10,6 +10,10 @@ on:
       - ".github/workflows/check-controller.yaml"
       - "deuterium-controller/**"
 
+defaults:
+  run:
+    working-directory: deuterium-controller
+
 jobs:
   check:
     name: Check
@@ -24,4 +28,3 @@ jobs:
           targets: thumbv7em-none-eabihf
       - name: Check
         run: cargo check
-        working-directory: deuterium-controller
