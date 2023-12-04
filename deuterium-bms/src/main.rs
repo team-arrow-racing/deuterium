@@ -3,7 +3,7 @@
 #![feature(type_alias_impl_trait)]
 
 use defmt_rtt as _;
-use pac25_hal::pac25140 as hal;
+use pac25_hal as hal;
 use panic_probe as _;
 
 use hal::prelude::*;
@@ -12,7 +12,7 @@ use rtic_monotonics::Monotonic;
 
 const SYSCLK: u32 = 150_000_000;
 
-#[rtic::app(device = hal::pac, peripherals = true, dispatchers = [SPI1])]
+#[rtic::app(device = hal::pac)]
 mod app {
     use super::*;
 
