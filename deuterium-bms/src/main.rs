@@ -1,3 +1,14 @@
+//! Deuterium Battery Cell Manager
+//!
+//! # Task Priorities
+//! | Prio | Use        |
+//! | ---- | ---------- |
+//! | 0    | Background |
+//! | 1    | General    |
+//! | 2    | Comms      |
+//! | 3    | Critical   |
+//!
+
 #![no_main]
 #![no_std]
 #![feature(type_alias_impl_trait)]
