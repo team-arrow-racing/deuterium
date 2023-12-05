@@ -7,6 +7,7 @@ Deuterium is a project to develop and open-source battery management system suit
 ### Background
 
 As the market segment for high cell count batteries expands, more streamlined and integrated solutions have been developed by a number of vendors. What used to have to be achieved with a number of discrete components can now be done with single chips that match or even beat the total cost.
+
 ### Assumptions and Constraints
 
 - The solution will be produced in relatively small quantities. The need for leveraging economies of scale or pricing down a solution is very little.
@@ -45,6 +46,7 @@ The two components of the Deuterium solution (not including battery hardware and
 - LV bus and Aux. LV bus
 - HV interlock
 - HV bus
+
 ## Modes of Operation
 
 - Stationary use
