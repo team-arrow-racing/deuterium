@@ -2,7 +2,7 @@
 
 ## Setup
 
-```shell
+```sh
 rustup target add thumbv7em-none-eabihf
 cargo install flip-link probe-rs
 ```
