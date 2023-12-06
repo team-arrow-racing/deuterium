@@ -10,8 +10,8 @@ use crate::hal::{
 };
 
 // CAN Bus
-pub type Can1Tx = PA12<Alternate<PushPull, 9>>;
-pub type Can1Rx = PA11<Alternate<PushPull, 9>>;
+pub type Can1Tx = PB9<Alternate<PushPull, 9>>;
+pub type Can1Rx = PB8<Alternate<PushPull, 9>>;
 pub type Can1 = Can<CAN1, (Can1Tx, Can1Rx)>;
 
 // todo: add support for CAN2 to stm32l4xx-hal crate

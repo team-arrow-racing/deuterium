@@ -92,14 +92,12 @@ mod app {
         };
 
         let (can1_tx, can1_rx) = {
-            let rx =
-                gpioa
-                    .pa11
-                    .into_alternate(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrh);
-            let tx =
-                gpioa
-                    .pa12
-                    .into_alternate(&mut gpioa.moder, &mut gpioa.otyper, &mut gpioa.afrh);
+            let rx = gpiob
+                .pb8
+                .into_alternate(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrh);
+            let tx = gpiob
+                .pb9
+                .into_alternate(&mut gpiob.moder, &mut gpiob.otyper, &mut gpiob.afrh);
 
             let mut can = bxcan::Can::builder(Can::new(&mut rcc.apb1r1, cx.device.CAN1, (tx, rx)))
                 .set_bit_timing(0x001c_0009)
